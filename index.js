@@ -48,6 +48,7 @@ app.use(express.json());
 // Part of Step 4 (imports)
 const { fetchAllBooks, fetchBookById, createNewBook } = require("./db/seed");
 
+// E4:
 // Get all books route handler code
 async function getAllBooks(req, res, next) {
     try {
@@ -64,6 +65,7 @@ async function getAllBooks(req, res, next) {
 }
 app.get("/books", getAllBooks)
 
+// E4:
 // Get single book route handler code
 async function getBookById(req, res, next) {
     try {
@@ -78,6 +80,7 @@ async function getBookById(req, res, next) {
 }
 app.get("/books/:id", getBookById)
 
+// E4: 
 // POST a new book
 async function postNewBook(req, res, next) {
     try {
@@ -89,12 +92,7 @@ async function postNewBook(req, res, next) {
         console.log(error);
     }
 };
-
 app.post("/books", postNewBook)
-
-// app.get("/books", (req, res, next) => {
-
-// })
 
 // Penultimate Step: 
 const client = require("./db/index")

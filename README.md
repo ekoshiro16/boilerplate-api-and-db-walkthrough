@@ -48,7 +48,7 @@ Final final step: Don't forget to invoke your main function!
         - index.js 
 2. In your package.json, you want to add a new script (in general I like to call it "dev"), and we will set the value of it to using nodemon to run our root index.js file. 
 
-### Setting up our root index.js file
+### Setting up our root index.js file + writing Route handlers
 Context: Our root index.js file is where we will predominantly write all the main setup code for our Express API server. 
 Legend: All steps will be labeled with an E (Express)
 1. Import the express library. 
@@ -57,6 +57,7 @@ Legend: All steps will be labeled with an E (Express)
     - a. You must set up your express.json middleware
 4. Now let's start writing some route handlers. 
     - Remember that many of these route handlers will be using DB functions that you've already written in the above steps and you'll be using those functions directly inside of your route handler's callback functions. 
+Penultimate Step: We have to make sure we also import our client and connect it so that our Express API can access our database appropriately. 
 Final Step: We have to make sure our API Express server is directly connected and "listening" to a sertain port 
 
 
