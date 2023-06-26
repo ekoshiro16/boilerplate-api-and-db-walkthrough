@@ -64,3 +64,4 @@ Final Step: We have to make sure our API Express server is directly connected an
 #### Glossary
 - Middleware: These are functions that are being run AFTER the request has been sent, but BEFORE the request has been responded to. 
 - app.use in express: This is a generic verb method that will work for ALL verb methods (i.e. GET, POST, PUT, DELETEE)
+- Array & Object Destructuring (see test.js file)

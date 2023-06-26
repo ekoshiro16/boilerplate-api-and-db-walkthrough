@@ -87,6 +87,69 @@ async function fetchBookById(idValue) {
         console.log(error); 
     }
 }
+// EXACT SAME AS THE FUNCTION BELOW, EXCEPT WITHOUT OBJ DESTRUCTURING IN THE PARAMETER:
+// async function updateBookById(bookId, updatedBookObjData) {
+//     try {
+//         const { rows } = await client.query(`
+//             UPDATE books
+//             SET title = $1, author = $2, description = $3
+//             WHERE "bookId" = $4
+//             RETURNING *;
+//         `, [updatedBookObjData.title, updatedBookObjData.author, updatedBookObjData.description, bookId])
+//     } catch (error) {
+//         console.log(error); 
+//     }
+// }
+
+async function updateBookById(bookId, {title, author, description}) {
+    try {
+        const { rows } = await client.query(`
+            UPDATE books
+            SET title = $1, author = $2, description = $3
+            WHERE "bookId" = $4
+            RETURNING *;
+        `, [title, author, description, bookId])
+
+        if (rows.length) {
+            return rows[0];
+        }
+    } catch (error) {
+        console.log(error); 
+    }
+}
+
+async function deleteBookById(bookId) {
+    try {
+        // const { rows } = await client.query(`
+        //     DELETE FROM books
+        //     WHERE "bookId" = ${bookId};
+        // `)
+
+        const { rows } = await client.query(`
+            DELETE FROM books
+            WHERE "bookId" = $1
+            RETURNING *;
+        `, [bookId])
+
+        if (rows.length) {
+            return rows[0]
+        } else {
+            return "Failed to delete book"
+        }
+
+        // const { rows: [theDeletedBook] } = await client.query(`
+        //     DELETE FROM books
+        //     WHERE "bookId" = $1
+        //     RETURNING *;
+        // `, [bookId])
+        // if (rows.length) {
+        //     return theDeletedBook
+        // }
+
+    } catch (error) {
+        console.log(error); 
+    }
+}
 
 // async function fetchBookByTitle(titleValue) {
 
@@ -149,5 +212,9 @@ async function buildDatabase() {
 module.exports = {
     fetchAllBooks,
     fetchBookById,
-    createNewBook
+    createNewBook,
+    deleteBookById,
+    updateBookById
 }
+
+

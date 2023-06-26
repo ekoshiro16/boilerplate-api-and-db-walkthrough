@@ -4,7 +4,6 @@ const express = require("express");
 // Step E2: 
 const app = express(); 
 
-
 // Two ways of writing middleware functions: 
 // Option A:
 function myFirstMiddleware(req, res, next) {
@@ -46,9 +45,39 @@ app.use(express.json());
         // 2) the callback function to be run when that path has been hit
 
 // Part of Step 4 (imports)
-const { fetchAllBooks, fetchBookById, createNewBook } = require("./db/seed");
+const { fetchAllBooks, fetchBookById, createNewBook, deleteBookById, updateBookById } = require("./db/seed");
+
+
 
 // E4:
+// Delete a single book by id
+async function deleteASingleBook(req, res) {
+    try {
+        console.log(req.params.id)
+        const theDeletedData = await deleteBookById(Number(req.params.id))
+
+        res.send(theDeletedData)
+    } catch (error) {
+        console.log(error); 
+    }
+}
+app.delete("/books/:id", deleteASingleBook)
+
+// Updating a single book by id
+async function updateABook(req, res) {
+    try {
+        let theBookId = Number(req.params.id);
+        let theActualUpdatedData = req.body;
+
+        const newUpdatedBook = await updateBookById(theBookId, theActualUpdatedData)
+
+        res.send(newUpdatedBook);
+    } catch (error) {
+        console.log(error); 
+    }
+}
+app.put("/books/:id", updateABook)
+
 // Get all books route handler code
 async function getAllBooks(req, res, next) {
     try {
