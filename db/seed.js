@@ -18,6 +18,14 @@ async function createTables() {
                 username VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL
             );
+
+            CREATE TABLE reviews(
+                "reviewId" SERIAL PRIMARY KEY,
+                "description" VARCHAR(255) DEFAULT 'n/a',
+                rating INT DEFAULT 0,
+                "idOfBook" INT REFERENCES books("bookId"),
+                "reviewerId" INT REFERENCES users("userId")
+            );
         `)
 
         // Note: If you want to make multiple tables, you can do it all in the same function as long as you use await client.query
@@ -31,6 +39,7 @@ async function createTables() {
 async function destroyTables() {
     try {
         await client.query(`
+            DROP TABLE IF EXISTS reviews; 
             DROP TABLE IF EXISTS books; 
             DROP TABLE IF EXISTS users; 
         `)
